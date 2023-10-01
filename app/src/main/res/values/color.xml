@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Hexadecimal Colors -->
+
+    <!-- RGB Colors -->
+
+    <!-- ARGB Colors -->
+
+    <!-- Color Names -->
+    <color name="black">#000000</color>
+
+    <!-- Additional Colors -->
+
+    <color name="galaxyWhite">#F2F2F2</color>
+    <color name="galaxyLightGray">#484848</color>
+    <color name="galaxyDarkGray">#262626</color>
+</resources>

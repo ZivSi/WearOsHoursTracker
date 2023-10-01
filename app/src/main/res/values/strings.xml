@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Hours Tracker</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+
+    <string name="hours_this_month">Hours this month: %1$s</string>
+    <string name="salary_this_month">%1$s ₪</string>
+    <string name="add_button_text">Add</string>
+    <string name="entries_this_month">Entries (%1$s):</string>
+
+
+</resources>
