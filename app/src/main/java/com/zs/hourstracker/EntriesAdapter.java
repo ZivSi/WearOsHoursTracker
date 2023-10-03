@@ -6,19 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 
 public class EntriesAdapter extends RecyclerView.Adapter<EntriesAdapter.ViewHolder> {
-    private ArrayList<Entry> dataList;
-    private Context context;
+    private final ArrayList<Entry> dataList;
     private OnItemClickListener onItemClickListener;
 
-    // Constructor to initialize the data source
-    public EntriesAdapter(Context context, ArrayList<Entry> dataList) {
-        this.context = context;
+    public EntriesAdapter(ArrayList<Entry> dataList) {
         this.dataList = dataList;
     }
 
@@ -33,24 +31,19 @@ public class EntriesAdapter extends RecyclerView.Adapter<EntriesAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(getAdapterPosition());
-                    }
                 }
             });
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(getAdapterPosition());
-                    }
                     return true;
                 }
             });
         }
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate your item layout XML here

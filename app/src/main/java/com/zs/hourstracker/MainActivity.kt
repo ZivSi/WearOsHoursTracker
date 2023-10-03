@@ -62,7 +62,7 @@ class MainActivity : Activity() {
     }
 
     private fun initializeRecyclerView(entries: ArrayList<Entry>) {
-        val adapter = EntriesAdapter(this, entries)
+        val adapter = EntriesAdapter(entries)
         recyclerView.adapter = adapter
 
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)

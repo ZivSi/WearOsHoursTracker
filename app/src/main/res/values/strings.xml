@@ -9,6 +9,8 @@
     <string name="salary_this_month">%1$s ₪</string>
     <string name="add_button_text">Add</string>
     <string name="entries_this_month">Entries (%1$s):</string>
+    <string name="hours">Hours</string>
+    <string name="save">Save</string>
 
 
 </resources>
