@@ -3,6 +3,8 @@ package com.zs.hourstracker
 import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
@@ -21,6 +23,8 @@ class MainActivity : Activity() {
 
     private var totalHours = 0.0
     private var salary = 0.0
+
+    val handler = Handler(Looper.getMainLooper())
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +52,7 @@ class MainActivity : Activity() {
         salaryThisMonthTextView.text =
             getString(R.string.salary_this_month, salary.toString())
 
+        initMonthPicker()
         initializeRecyclerView(entries)
     }
 
@@ -59,6 +64,55 @@ class MainActivity : Activity() {
         totalHoursThisMonthTextView = binding.hoursThisMonthTextView
         entriesThisMonthTextView = binding.entriesThisMonthTextView
         salaryThisMonthTextView = binding.salaryThisMonthTextView
+    }
+
+    private fun initMonthPicker() {
+        binding.monthPicker.minValue = 1
+        binding.monthPicker.maxValue = 12
+        binding.monthPicker.displayedValues = arrayOf(
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        )
+        binding.monthPicker.value = Utility.getCurrentMonth()
+
+        // This is very expensive so wait 1 second before loading the entries, the user may want to change the month again
+        binding.monthPicker.setOnValueChangedListener { _, _, _ ->
+            handler.removeCallbacksAndMessages(null)
+
+            handler.postDelayed({
+                val currentYear = Utility.getCurrentYear()
+                // Current month is based on the index of the displayed values
+                val currentMonth = binding.monthPicker.value
+
+                entries = databaseHelper.readEntriesByMonthAndYear(currentMonth, currentYear)
+
+                totalHours = Utility.countHours(entries)
+
+                salary = Utility.calculateSalary(totalHours)
+
+                totalHoursThisMonthTextView.text =
+                    getString(R.string.hours_this_month, totalHours.toString())
+
+                salaryThisMonthTextView.text =
+                    getString(R.string.salary_this_month, salary.toString())
+
+                entriesThisMonthTextView.text =
+                    getString(R.string.entries_this_month, Utility.getMonthName(currentMonth))
+
+                initializeRecyclerView(entries)
+            }, 1000)
+        }
+
     }
 
     private fun initializeRecyclerView(entries: ArrayList<Entry>) {
@@ -108,6 +162,7 @@ class MainActivity : Activity() {
 
         return entry
     }
+
     fun addEntry(view: View) {
         val intent = android.content.Intent(this, AddEntryActivity::class.java)
         startActivity(intent)
