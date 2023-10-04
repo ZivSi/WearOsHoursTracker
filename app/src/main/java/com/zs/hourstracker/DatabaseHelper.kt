@@ -49,6 +49,8 @@ class DatabaseHelper(private val context: Context) :
         val selection = "month = ? AND year = ?"
         val selectionArgs = arrayOf(month.toString(), year.toString())
 
+        val sortOrder = "month ASC, day ASC"
+
         val cursor = db.query(
             TABLE_NAME,
             projection,
@@ -56,7 +58,7 @@ class DatabaseHelper(private val context: Context) :
             selectionArgs,
             null,
             null,
-            null
+            sortOrder
         )
 
         val entries = ArrayList<Entry>()
